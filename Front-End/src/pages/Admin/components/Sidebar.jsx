@@ -6,6 +6,7 @@ import {
   Handshake,
   FolderKanban,
   UserStar,
+  FileText,
   LogOut,
   Clock,
   Package,
@@ -23,7 +24,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
   const menuItems = [
     { path: "/admin", label: "Dashboard", icon: <Home className="w-5 h-5" /> },
     { path: "/admin/crew", label: "Crew", icon: <Users className="w-5 h-5" /> },
-    { path: "/admin/Product", label: "Product", icon: <Package className="w-5 h-5" /> },
+    { path: "/admin/product", label: "Product", icon: <Package className="w-5 h-5" /> },
     {
       path: "/admin/project",
       label: "Project",
@@ -38,6 +39,11 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
       path: "/admin/testimonial",
       label: "Testimonial",
       icon: <UserStar className="w-5 h-5" />,
+    },
+    {
+      path: "/admin/blog",
+      label: "Blog",
+      icon: <FileText className="w-5 h-5" />,
     },
   ];
 

@@ -90,10 +90,18 @@ const Header = () => {
         {/* Desktop nav - MENU DI TENGAH */}
         <nav className="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2">
           <ul className="flex gap-12 text-lg font-medium">
-            {['/', '/About', '/Project'].map((route) => (
+            {['/', '/about', '/project', '/blog'].map((route) => (
               <li key={route}>
                 <Link to={route} className={linkClass(route)} onClick={scrollToTop}>
-                  {route === '/' ? 'Home' : route === '/About' ? 'About Us' : 'Project'}
+                  {route === '/'
+                    ? 'Home'
+                    : route === '/about'
+                      ? 'About Us'
+                      : route === '/project'
+                        ? 'Project'
+                        : route === '/blog'
+                          ? 'Blog'
+                          : 'Contact'}
                 </Link>
               </li>
             ))}
@@ -140,7 +148,7 @@ const Header = () => {
             variants={mobileMenuVariants}
             className="flex flex-col items-center py-6 gap-6 lg:hidden border-t border-white/20 overflow-hidden"
           >
-            {['/', '/About', '/Project'].map((route, index) => (
+            {['/', '/about', '/project', '/blog'].map((route, index) => (
               <motion.div
                 key={route}
                 variants={menuItemVariants}
@@ -162,7 +170,15 @@ const Header = () => {
                     path === route ? 'underline' : ''
                   } text-lg hover:text-gray-300 block py-2`}
                 >
-                  {route === '/' ? 'Home' : route === '/About' ? 'About Us' : 'Project'}
+                  {route === '/'
+                    ? 'Home'
+                    : route === '/about'
+                      ? 'About Us'
+                      : route === '/project'
+                        ? 'Project'
+                        : route === '/blog'
+                          ? 'Blog'
+                          : 'Contact'}
                 </Link>
               </motion.div>
             ))}

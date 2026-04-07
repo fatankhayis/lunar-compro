@@ -454,5 +454,113 @@ export const uploadTestimonialVideo = async (id, videoFile) => {
   }
 };
 
+// ======================
+// API BLOG POSTS
+// ======================
+
+// Public: list published posts
+export const getPublicPosts = async () => {
+  const response = await API.get('/api/posts/public');
+  return response.data.data || [];
+};
+
+// Public: list published posts (paginated)
+export const getPublicPostsPage = async (page = 1, perPage = 9) => {
+  const response = await API.get('/api/posts/public', {
+    params: {
+      page,
+      per_page: perPage,
+    },
+  });
+
+  return {
+    data: response.data.data || [],
+    meta: response.data.meta || {
+      current_page: page,
+      last_page: 1,
+      per_page: perPage,
+      total: (response.data.data || []).length,
+    },
+  };
+};
+
+// Public: post detail by slug
+export const getPostBySlug = async (slug) => {
+  const response = await API.get(`/api/posts/slug/${slug}`);
+  return response.data.data;
+};
+
+// Admin: list all posts
+export const getPosts = async () => {
+  const response = await API.get('/api/posts');
+  return response.data.data || [];
+};
+
+export const getPostById = async (id) => {
+  const response = await API.get(`/api/posts/${id}`);
+  return response.data.data;
+};
+
+export const createPost = async (postData) => {
+  const formData = new FormData();
+  formData.append('title', postData.title);
+  formData.append('excerpt', postData.excerpt || '');
+  formData.append('content', postData.content);
+  formData.append('is_published', postData.is_published ? '1' : '0');
+
+  if (postData.published_at) {
+    formData.append('published_at', postData.published_at);
+  }
+
+  if (postData.cover_image instanceof File) {
+    formData.append('cover_image', postData.cover_image);
+  }
+
+  const response = await API.post('/api/posts', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response.data.data;
+};
+
+export const updatePost = async (id, postData) => {
+  const formData = new FormData();
+  formData.append('title', postData.title);
+  formData.append('excerpt', postData.excerpt || '');
+  formData.append('content', postData.content);
+  formData.append('is_published', postData.is_published ? '1' : '0');
+
+  if (postData.published_at) {
+    formData.append('published_at', postData.published_at);
+  }
+
+  if (postData.cover_image instanceof File) {
+    formData.append('cover_image', postData.cover_image);
+  }
+
+  const response = await API.post(`/api/posts/${id}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response.data.data;
+};
+
+export const deletePost = async (id) => {
+  const response = await API.delete(`/api/posts/${id}`);
+  return response.data;
+};
+
+// ======================
+// API INQUIRIES (LEAD CAPTURE)
+// ======================
+
+export const createInquiry = async (payload) => {
+  const response = await API.post('/api/inquiries', payload);
+  return response.data;
+};
+
+export const getInquiries = async () => {
+  const response = await API.get('/api/inquiries');
+  return response.data.data || [];
+};
+
 
 export default API;

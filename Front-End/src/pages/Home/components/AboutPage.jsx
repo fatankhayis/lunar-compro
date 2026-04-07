@@ -55,7 +55,7 @@ const AboutPage = () => {
 
   return (
     <motion.div 
-      className="w-full p-5 md:py-20 lg:py-42 relative z-10"
+      className="w-full p-5 md:py-16 lg:py-20 relative z-10"
       initial="hidden"
       animate="visible"
       variants={containerVariants}

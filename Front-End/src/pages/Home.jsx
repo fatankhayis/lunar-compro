@@ -6,6 +6,7 @@ import PartnershipPage from './Home/components/PartnershipPage';
 import ClientPage from './Home/components/ClientPage';
 import Footer from '../components/Footer';
 import ProductPage from './Home/components/ProductPage';
+import BlogSection from './About/Components/BlogSection';
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
         <Header />
         <HomePage />
         <AboutPage />
+        <BlogSection />
         <ProductPage />
         <ProjectPage />
         <PartnershipPage />

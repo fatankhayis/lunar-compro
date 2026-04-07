@@ -77,7 +77,7 @@ const ProjectPage = () => {
         {!loading && !error && (
           <div className="text-center mt-10">
             <a
-              href="/Project"
+              href="/project"
               className="inline-block px-5 py-2 rounded-xl border border-white/30 
               bg-white/15 backdrop-blur-md text-white
               hover:bg-white/25 hover:shadow-lg active:bg-white/30

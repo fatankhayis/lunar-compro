@@ -9,6 +9,8 @@ use App\Http\Controllers\api\CrewController;
 use App\Http\Controllers\api\ProjectController;
 use App\Http\Controllers\api\PartnerController;
 use App\Http\Controllers\api\ProductController;
+use App\Http\Controllers\api\InquiryController;
+use App\Http\Controllers\api\PostController;
 use App\Http\Controllers\api\TestimonialController;
 use App\Http\Controllers\DashboardController;
 // auth
@@ -46,6 +48,18 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('testimonials/{testimonial_id}', [TestimonialController::class, 'update']);
     Route::delete('testimonials/{testimonial_id}', [TestimonialController::class, 'destroy']);
 
+    // blog posts (admin)
+    Route::get('posts', [PostController::class, 'index']);
+    Route::get('posts/{post_id}', [PostController::class, 'show'])->whereNumber('post_id');
+    Route::post('posts', [PostController::class, 'store']);
+    Route::post('posts/{post_id}', [PostController::class, 'update'])->whereNumber('post_id');
+    Route::delete('posts/{post_id}', [PostController::class, 'destroy'])->whereNumber('post_id');
+
+    // inquiries (admin)
+    Route::get('inquiries', [InquiryController::class, 'index']);
+    Route::get('inquiries/{inquiry_id}', [InquiryController::class, 'show']);
+    Route::delete('inquiries/{inquiry_id}', [InquiryController::class, 'destroy']);
+
     // categories
     Route::get('categories', [CategoryController::class, 'index']);
     Route::post('categories', [CategoryController::class, 'store']);
@@ -77,6 +91,13 @@ Route::get('partners/{partner_id}', [PartnerController::class, 'show']);
 // public route testimonials
 Route::get('testimonials', [TestimonialController::class, 'index']);
 Route::get('testimonials/{testimonial_id}', [TestimonialController::class, 'show']);
+
+// Public routes posts (blog)
+Route::get('posts/public', [PostController::class, 'publicIndex']);
+Route::get('posts/slug/{slug}', [PostController::class, 'showBySlug']);
+
+// Public route inquiries (lead capture)
+Route::post('inquiries', [InquiryController::class, 'store']);
 
 // analytics
 Route::get('analytics', [AnalyticsController::class, 'getAnalytics']);
