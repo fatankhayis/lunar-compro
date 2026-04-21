@@ -79,7 +79,7 @@ const AnalyticsDashboard = () => {
             />
           </div>
 
-          {/* 4 Chart ringkasan */}
+          {/* 4 summary charts */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-8">
             <ChartContainer title="Top 10 Visited Pages" dataAvailable={pages.length > 0}>
               <PagesChartComponent data={pages} />

@@ -45,7 +45,7 @@ const TeamPage = () => {
 
         setCrewList(sorted);
       } catch (err) {
-        console.error("❌ Gagal memuat crew:", err);
+        console.error("❌ Failed to load crew:", err);
       } finally {
         setLoading(false);
       }

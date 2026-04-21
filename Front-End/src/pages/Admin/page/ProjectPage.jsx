@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import {
   getProjects,
@@ -23,6 +23,7 @@ const ProjectPage = () => {
   const [editingId, setEditingId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const hasShownEmptyToastRef = useRef(false);
 
   // Fetch all projects from backend
   useEffect(() => {
@@ -30,8 +31,7 @@ const ProjectPage = () => {
       try {
         setLoading(true);
         const data = await getProjects();
-        setProjects(
-          data.map((p) => ({
+        const mapped = (data || []).map((p) => ({
             id: p.project_id,
             name: p.title,
             description: p.description,
@@ -40,8 +40,13 @@ const ProjectPage = () => {
             image: p.project_image
               ? `${BASE_URL}/storage/${p.project_image}`
               : null,
-          }))
-        );
+          }));
+        setProjects(mapped);
+
+        if (!hasShownEmptyToastRef.current && mapped.length === 0) {
+          hasShownEmptyToastRef.current = true;
+          toast("No projects yet. Add a project to see this feature in action.");
+        }
       } catch (err) {
         toast.error("Failed to load projects!", err);
       } finally {

@@ -21,9 +21,9 @@ class TestimonialController extends Controller
 
         if ($testi->isEmpty()) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'No testimonials found'
-            ], 404);
+                'status' => 'success',
+                'data' => $testi,
+            ], 200);
         }
 
         return response()->json([

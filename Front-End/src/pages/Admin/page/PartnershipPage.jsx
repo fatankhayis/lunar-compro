@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import PartnershipTable from "./partnership/PartnershipTable";
 import PartnershipModal from "./partnership/PartnershipModal";
@@ -27,6 +27,9 @@ const PartnershipPage = () => {
     per_page: 6, // ✅ Default 6 items per page
   });
 
+  const hasShownEmptyPartnersToastRef = useRef(false);
+  const hasShownEmptyCategoriesToastRef = useRef(false);
+
   // Fetch partners with optional pagination and category filter
   const fetchPartners = async (pageUrl = null, categoryId = selectedCategory) => {
     try {
@@ -39,6 +42,11 @@ const PartnershipPage = () => {
       const res = await API.get(url);
       const data = res.data?.data;
       const list = data?.data || [];
+
+      if (!hasShownEmptyPartnersToastRef.current && list.length === 0) {
+        hasShownEmptyPartnersToastRef.current = true;
+        toast("No partnerships yet. Add a partnership to see this feature in action.");
+      }
 
       setPartners(
         list.map((p) => ({
@@ -69,6 +77,11 @@ const PartnershipPage = () => {
     try {
       const items = await getCategories();
       setCategories(items);
+
+      if (!hasShownEmptyCategoriesToastRef.current && (!items || items.length === 0)) {
+        hasShownEmptyCategoriesToastRef.current = true;
+        toast("No categories yet. Add a category to use this feature.");
+      }
     } catch (err) {
       console.error("Failed to load categories", err);
       setCategories([]);

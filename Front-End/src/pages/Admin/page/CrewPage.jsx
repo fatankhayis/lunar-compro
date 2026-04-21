@@ -30,6 +30,7 @@ const CrewPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(crewList.length === 0);
   const fetchedRef = useRef(false); // ✅ Prevent duplicate fetching
+  const hasShownEmptyToastRef = useRef(false);
 
   // ==============================
   // 🧩 Fetch Crew Data (only once)
@@ -42,7 +43,7 @@ const CrewPage = () => {
       try {
         setLoading(true);
         const data = await getCrew();
-        const mapped = data.map((c) => ({
+        const mapped = (data || []).map((c) => ({
           id: c.crew_id,
           name: c.name,
           title: c.title,
@@ -52,6 +53,11 @@ const CrewPage = () => {
         }));
         setCrewList(mapped);
         sessionStorage.setItem("crew_cache", JSON.stringify(mapped)); // 💾 Cache data
+
+        if (!hasShownEmptyToastRef.current && mapped.length === 0) {
+          hasShownEmptyToastRef.current = true;
+          toast("No crew members yet. Add a crew member to see this feature in action.");
+        }
       } catch (err) {
         toast.error("Failed to load crew data!", err);
       } finally {

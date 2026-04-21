@@ -317,16 +317,8 @@ export const getTestimonials = async () => {
 
 // GET semua testimonial (list versi admin) dengan pagination
 export const getTestimonialsList = async (page = 1, perPage = 10) => {
-  try {
-    const response = await API.get(`/api/testimonials?page=${page}&per_page=${perPage}`);
-    return response.data;
-  } catch (error) {
-    console.error('❌ Error fetching testimonials list:', error);
-    return {
-      data: [],
-      meta: { current_page: 1, total: 0 }
-    };
-  }
+  const response = await API.get(`/api/testimonials?page=${page}&per_page=${perPage}`);
+  return response.data;
 };
 
 // GET testimonial by ID

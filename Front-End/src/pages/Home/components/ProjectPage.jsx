@@ -25,7 +25,7 @@ const ProjectPage = () => {
         setProjects(filtered);
       } catch (err) {
         console.error(err);
-        setError("Gagal memuat project");
+        setError("Failed to load projects");
       } finally {
         setLoading(false);
       }

@@ -4,12 +4,13 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { BASE_URL } from '../url';
 import { getPostBySlug } from './Admin/services/api';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 
-const formatDate = (value) => {
+const formatDate = (value, locale) => {
   if (!value) return '';
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return '';
-  return date.toLocaleDateString('id-ID', {
+  return date.toLocaleDateString(locale || 'en-US', {
     year: 'numeric',
     month: 'long',
     day: '2-digit',
@@ -18,6 +19,7 @@ const formatDate = (value) => {
 
 const BlogDetail = () => {
   const { slug } = useParams();
+  const { lang, t } = useI18n();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -35,7 +37,7 @@ const BlogDetail = () => {
       } catch (e) {
         console.error(e);
         if (!mounted) return;
-        setError('Post not found or failed to load.');
+        setError(t('blog_detail_failed'));
         setPost(null);
       } finally {
         if (mounted) setLoading(false);
@@ -55,7 +57,7 @@ const BlogDetail = () => {
   }, [post]);
 
   const authorName = post?.author?.name || 'Admin';
-  const publishedText = formatDate(post?.published_at || post?.created_at);
+  const publishedText = formatDate(post?.published_at || post?.created_at, lang === 'id' ? 'id-ID' : 'en-US');
 
   return (
     <div className="min-h-screen">
@@ -79,7 +81,7 @@ const BlogDetail = () => {
             <header className="space-y-2">
               <h1 className="text-3xl md:text-4xl font-semibold">{post?.title}</h1>
               <div className="text-sm text-white/70">
-                By {authorName}
+                {t('blog_by', { name: authorName })}
                 {publishedText ? ` • ${publishedText}` : ''}
               </div>
               {post?.excerpt ? (

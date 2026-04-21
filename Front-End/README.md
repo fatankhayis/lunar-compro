@@ -1,12 +1,63 @@
-# React + Vite
+# Lunar-Compro (Front-End)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Front-end SPA untuk **Lunar company profile**.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React + Vite
+- TailwindCSS
+- React Router
+- Axios
+- Framer Motion
 
-## Expanding the ESLint configuration
+## Fitur
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Public site
+
+- Halaman company profile (Home, About, Projects, Products, Partners/Clients, Team, Testimonials)
+- Blog/News
+  - Preview post terbaru (maks. 6) di Home & About
+  - List semua post di `/blog` (pagination)
+  - Detail post di `/blog/:slug`
+- Form **Request a Quote** di footer (mengirim inquiry)
+- Multi-language UI (EN/ID) dengan switcher flag kecil di footer
+
+### Admin UI
+
+- Login admin (JWT)
+- CRUD: Projects, Products, Crew, Partners, Testimonials, Categories, Blog Posts
+- Inquiries inbox (lihat & hapus)
+- Analytics dashboard (dummy/local atau Google Analytics bila backend dikonfigurasi)
+
+## Development (FE dev server)
+
+1) Install dependencies
+
+```bash
+npm install
+```
+
+2) Set base URL API
+
+Buat file `.env.local`:
+
+```env
+VITE_BACKEND_URL=http://127.0.0.1:8000
+```
+
+3) Run
+
+```bash
+npm run dev
+```
+
+FE biasanya berjalan di `http://localhost:5173`.
+
+## Build
+
+```bash
+npm run build
+```
+
+Catatan:
+- Untuk mode single-server, build React diarahkan ke `Back-End/public/app` via script di Back-End (`npm run build:spa`).

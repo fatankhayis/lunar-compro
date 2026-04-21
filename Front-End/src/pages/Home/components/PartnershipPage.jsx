@@ -49,7 +49,7 @@ const PartnershipPage = () => {
 
         setGroupedPartners(grouped);
       } catch (err) {
-        console.error("Gagal load partnership:", err);
+        console.error("Failed to load partnerships:", err);
       } finally {
         setLoading(false);
       }
@@ -77,7 +77,7 @@ const PartnershipPage = () => {
 
   // JIKA TIDAK ADA DATA
   if (Object.keys(groupedPartners).length === 0) {
-    return <p className="text-center text-white py-20">Belum ada partnership.</p>;
+    return <p className="text-center text-white py-20">No partnerships yet.</p>;
   }
 
   // Pisahkan "Schools" dan yang lain

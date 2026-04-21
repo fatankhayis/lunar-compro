@@ -22,7 +22,7 @@ const CardProduct = ({ product, loading = false }) => {
     }
   };
 
-  // 🦴 Skeleton loader tampil jika `loading` true atau data belum ada
+  // 🦴 Show skeleton loader when `loading` is true or data is empty
   if (loading || !product) {
     return (
       <motion.div 

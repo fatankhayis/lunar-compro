@@ -61,7 +61,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
 
       if (remaining <= 0) {
         setTimeLeft("Expired");
-        toast.error("Sesi kamu telah berakhir");
+        toast.error("Your session has ended");
         // 🧹 Auto logout
         localStorage.removeItem("token");
         localStorage.removeItem("token_expiry");
@@ -93,7 +93,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
         );
       }
     } catch (error) {
-      console.warn("Logout API gagal (mungkin token sudah expired).", error);
+      console.warn("Logout API failed (token may have expired).", error);
     } finally {
       localStorage.removeItem("token");
       localStorage.removeItem("token_expiry");
@@ -101,7 +101,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
       // 🔹 Hapus juga sidebar state saat logout
       localStorage.removeItem("sidebarOpen");
 
-      toast.success("Logout berhasil");
+      toast.success("Logged out successfully");
 
       setTimeout(() => navigate("/login"), 800);
     }
@@ -133,7 +133,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
                 <button
                   onClick={toggleSidebar}
                   className="p-1 rounded-md hover:bg-gray-100 transition"
-                  title="Tutup Sidebar"
+                  title="Close sidebar"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -142,7 +142,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
               <button
                 onClick={toggleSidebar}
                 className="p-1 rounded-md hover:bg-gray-100 transition w-full flex justify-center"
-                title="Buka Sidebar"
+                title="Open sidebar"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

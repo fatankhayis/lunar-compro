@@ -33,7 +33,7 @@ const ClientPage = () => {
         setTestimonials(validatedData);
         
       } catch (err) {
-        console.error('❌ Gagal memuat testimonial:', err);
+        console.error('❌ Failed to load testimonials:', err);
       } finally {
         setLoading(false);
       }

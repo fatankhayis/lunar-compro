@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import TestimonialTable from './Testimonial/TestimonialTable';
 import TestimonialModal from './Testimonial/TestimonialModal';
@@ -19,12 +19,18 @@ const TestimonialPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [perPage, setPerPage] = useState(6);
+  const hasShownEmptyToastRef = useRef(false);
 
   const fetchTestimonials = async (page = 1) => {
     try {
       setLoading(true);
       const res = await getTestimonialsList(page);
       const items = res.data?.data || res.data || [];
+
+      if (!hasShownEmptyToastRef.current && items.length === 0) {
+        hasShownEmptyToastRef.current = true;
+        toast('No testimonials yet. Add a testimonial to see this feature in action.');
+      }
 
       setTestimonials(items.map((t) => ({
         id: t.testimonial_id || t.id,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import {
   getProducts,
@@ -24,6 +24,7 @@ const ProductPage = () => {
   const [editingId, setEditingId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const hasShownEmptyToastRef = useRef(false);
 
   // Fetch all products from the backend
   useEffect(() => {
@@ -31,8 +32,7 @@ const ProductPage = () => {
       try {
         setLoading(true);
         const data = await getProducts();
-        setProducts(
-          data.map((p) => ({
+        const mapped = (data || []).map((p) => ({
             id: p.product_id,
             name: p.title,
             description: p.description,
@@ -41,8 +41,13 @@ const ProductPage = () => {
             image: p.product_image
               ? `${BASE_URL}/storage/${p.product_image}`
               : null,
-          }))
-        );
+          }));
+        setProducts(mapped);
+
+        if (!hasShownEmptyToastRef.current && mapped.length === 0) {
+          hasShownEmptyToastRef.current = true;
+          toast("No products yet. Add a product to see this feature in action.");
+        }
       } catch (err) {
         toast.error("Failed to load products!", err);
       } finally {

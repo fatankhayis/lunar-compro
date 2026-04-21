@@ -13,6 +13,36 @@ Monorepo untuk aplikasi company profile **Lunar**:
 
 ---
 
+## Fitur
+
+### Public site
+
+- Halaman company profile: Home, About, Projects, Products, Partners/Clients, Team/Crew, Testimonials
+- Blog/News:
+	- Preview blog terbaru (maks. 6) di Home & About
+	- Halaman list semua post (`/blog`) dengan pagination
+	- Detail post via slug (`/blog/:slug`) + cover image, excerpt, author, tanggal publish
+- Lead capture: form **Request a Quote** di footer (mengirim inquiry ke API)
+- Multi-language UI (EN/ID) dengan switcher flag kecil di footer (default EN, tersimpan di localStorage)
+
+### Admin
+
+- Login admin (JWT)
+- CRUD data:
+	- Projects, Products, Crew, Partners, Testimonials, Categories
+	- Blog Posts (draft/publish, cover image, slug)
+- Inquiries:
+	- Lihat list inquiry yang masuk
+	- Hapus inquiry
+- Analytics dashboard:
+	- Dummy data saat local jika Google Analytics belum diset
+	- Bisa pakai GA4 via Spatie Laravel Analytics
+
+Catatan perilaku:
+- Endpoint list pada API mengembalikan **200 + array kosong** bila data belum ada (bukan 404), supaya UI bisa menampilkan state "no data".
+
+---
+
 ## Daftar Isi
 
 - [Prasyarat](#prasyarat)

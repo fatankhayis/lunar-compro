@@ -19,9 +19,9 @@ class CrewController extends Controller
 
         if ($crews->isEmpty()) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'No crew found'
-            ], 404);
+                'status' => 'success',
+                'data' => [],
+            ], 200);
         }
 
         return response()->json([
@@ -67,9 +67,9 @@ class CrewController extends Controller
 
         if ($crew->isEmpty()) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'No crew found'
-            ], 404);
+                'status' => 'success',
+                'data' => [],
+            ], 200);
         }
 
         return response()->json([

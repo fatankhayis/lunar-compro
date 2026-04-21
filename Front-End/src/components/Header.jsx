@@ -3,10 +3,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Lunar from '../assets/Lunar-logo.png';
 import { Link, useLocation } from 'react-router-dom';
 import { Mail, Menu, X } from 'lucide-react';
+import { useI18n } from '../i18n/I18nProvider.jsx';
 
 const Header = () => {
   const [isScroll, setIsScroll] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const { t } = useI18n();
 
   const location = useLocation();
   const path = location.pathname;
@@ -94,13 +97,13 @@ const Header = () => {
               <li key={route}>
                 <Link to={route} className={linkClass(route)} onClick={scrollToTop}>
                   {route === '/'
-                    ? 'Home'
+                    ? t('nav_home')
                     : route === '/about'
-                      ? 'About Us'
+                      ? t('nav_about')
                       : route === '/project'
-                        ? 'Project'
+                        ? t('nav_project')
                         : route === '/blog'
-                          ? 'Blog'
+                          ? t('nav_blog')
                           : 'Contact'}
                 </Link>
               </li>
@@ -109,7 +112,7 @@ const Header = () => {
         </nav>
 
         {/* Desktop Contact - DI SEBELAH KANAN */}
-        <div className="hidden lg:flex">
+        <div className="hidden lg:flex items-start gap-3">
           <a
             href="https://mail.google.com/mail/?view=cm&fs=1&to=dev.lunarinteractive@gmail.com"
             target="_blank"
@@ -123,7 +126,7 @@ const Header = () => {
             <div className="group flex items-center gap-2 cursor-pointer">
               <div className="flex items-center gap-2 group-hover:scale-105 transition-transform duration-300">
                 <Mail size={18} />
-                <span>Collaborate with us</span>
+                <span>{t('header_collaborate')}</span>
               </div>
             </div>
           </a>
@@ -171,13 +174,13 @@ const Header = () => {
                   } text-lg hover:text-gray-300 block py-2`}
                 >
                   {route === '/'
-                    ? 'Home'
+                    ? t('nav_home')
                     : route === '/about'
-                      ? 'About Us'
+                      ? t('nav_about')
                       : route === '/project'
-                        ? 'Project'
+                        ? t('nav_project')
                         : route === '/blog'
-                          ? 'Blog'
+                          ? t('nav_blog')
                           : 'Contact'}
                 </Link>
               </motion.div>
@@ -207,7 +210,7 @@ const Header = () => {
               >
                 <Mail size={18} />
                 <span className="group-hover:scale-105 transition-transform duration-300">
-                  Collaborate with us
+                  {t('header_collaborate')}
                 </span>
               </a>
             </motion.div>

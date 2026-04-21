@@ -2,7 +2,7 @@
 
 ## Description
 
-Lunar-Compro API is a RESTful backend built with Laravel to support the Lunar company profile application. It provides endpoints for managing projects, products, crews, partners, testimonials, and categories.
+Lunar-Compro API is a RESTful backend built with Laravel to support the Lunar company profile application. It provides endpoints for managing projects, products, crews, partners, testimonials, categories, blog posts (news), and inquiries (lead capture).
 
 The API follows Laravel best practices including database migrations, Eloquent ORM, request validation, and token-based authentication. It is designed to be easily integrated with web, SPA, or mobile applications while maintaining a clean and scalable architecture.
 
@@ -21,18 +21,23 @@ The API follows Laravel best practices including database migrations, Eloquent O
 
 - RESTful API architecture with JSON responses
 - JWT-based authentication and authorization
-- CRUD operations for projects, products, crews, partners, testimonials, and categories
+- CRUD operations for projects, products, crews, partners, testimonials, categories, and blog posts
+- Public blog endpoints (paginated) + detail by slug
+- Public inquiry endpoint (lead capture) + admin inbox
 - Public and protected API endpoints
 - Database migrations and seeders for structured data management
 - Request validation and structured error handling
 - Consistent API response format
 - Integration with Google Analytics using Spatie Laravel Analytics
 
+Notes:
+- List endpoints are designed to return **200 + empty array/paginator** when no data exists, so the UI can show a clean "no data" state.
+
 ## Installation
 
 1. Clone the repository
-   git clone https://github.com/raihanshi18/Lunar-Compro.git
-   cd Lunar-Compro
+   git clone https://github.com/fatankhayis/lunar-compro.git
+   cd lunar-compro
 
 2. Install PHP dependencies
    composer install
@@ -146,6 +151,45 @@ Notes:
 
 ---
 
+### Blog Posts
+
+Admin endpoints:
+
+| Method | Endpoint | Description | Auth |
+|------|------|------|------|
+| GET | /api/posts | Get all posts (admin list) | Yes |
+| GET | /api/posts/{post_id} | Get post detail by id | Yes |
+| POST | /api/posts | Create new post | Yes |
+| POST | /api/posts/{post_id} | Update post | Yes |
+| DELETE | /api/posts/{post_id} | Delete post | Yes |
+
+Public endpoints:
+
+| Method | Endpoint | Description | Auth |
+|------|------|------|------|
+| GET | /api/posts/public | Get published posts (paginated) | No |
+| GET | /api/posts/slug/{slug} | Get published post detail by slug | No |
+
+---
+
+### Inquiries
+
+Public endpoint (lead capture):
+
+| Method | Endpoint | Description | Auth |
+|------|------|------|------|
+| POST | /api/inquiries | Submit a new inquiry | No |
+
+Admin endpoints:
+
+| Method | Endpoint | Description | Auth |
+|------|------|------|------|
+| GET | /api/inquiries | List inquiries | Yes |
+| GET | /api/inquiries/{inquiry_id} | Get inquiry detail | Yes |
+| DELETE | /api/inquiries/{inquiry_id} | Delete inquiry | Yes |
+
+---
+
 ### Testimonials
 
 | Method | Endpoint | Description | Auth |
@@ -203,8 +247,7 @@ php artisan test
 
 ## Author
 
-- Name: Raihan
-- GitHub: https://github.com/raihanshi18
+Maintained in this repository: https://github.com/fatankhayis/lunar-compro
 
 ## License
 

@@ -15,7 +15,7 @@ const ProductPage = () => {
           setProduct(data[0]);
         }
       } catch (err) {
-        console.error("Gagal memuat produk:", err);
+        console.error("Failed to load products:", err);
       } finally {
         setLoading(false);
       }

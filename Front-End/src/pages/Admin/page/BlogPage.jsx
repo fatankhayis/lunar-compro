@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { BASE_URL } from '../../../url';
 import {
@@ -24,14 +24,14 @@ const BlogAdminPage = () => {
   const [editingId, setEditingId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const hasShownEmptyToastRef = useRef(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
         const data = await getPosts();
-        setPosts(
-          (data || []).map((p) => ({
+        const mapped = (data || []).map((p) => ({
             id: p.post_id,
             title: p.title,
             slug: p.slug,
@@ -41,8 +41,14 @@ const BlogAdminPage = () => {
             published_at: p.published_at,
             cover_image: p.cover_image ? `${BASE_URL}/storage/${p.cover_image}` : null,
             updated_at: p.updated_at,
-          }))
-        );
+          }));
+
+        setPosts(mapped);
+
+        if (!hasShownEmptyToastRef.current && mapped.length === 0) {
+          hasShownEmptyToastRef.current = true;
+          toast('No posts yet. Add a post to see this feature in action.');
+        }
       } catch (e) {
         toast.error('Failed to load posts!');
         console.error(e);

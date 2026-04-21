@@ -76,7 +76,7 @@ const BlogModal = ({ form, setForm, onSubmit, onClose, editIndex }) => {
               value={form.title}
               onChange={handleChange}
               className="mt-1 w-full border border-gray-300 rounded-md p-2"
-              placeholder="Judul post"
+              placeholder="Post title"
             />
           </div>
 
@@ -90,7 +90,7 @@ const BlogModal = ({ form, setForm, onSubmit, onClose, editIndex }) => {
                 if (e.target.value.length <= 255) handleChange(e);
               }}
               className="mt-1 w-full border border-gray-300 rounded-md p-2"
-              placeholder="Ringkasan singkat"
+              placeholder="Short summary"
             />
             <div className="text-xs text-gray-500 text-right mt-1">
               {form.excerpt.length} / 255
@@ -104,7 +104,7 @@ const BlogModal = ({ form, setForm, onSubmit, onClose, editIndex }) => {
               value={form.content}
               onChange={handleChange}
               className="mt-1 w-full border border-gray-300 rounded-md p-2 h-40 resize-none"
-              placeholder="Isi blog/news"
+              placeholder="Write the post content"
             />
           </div>
 

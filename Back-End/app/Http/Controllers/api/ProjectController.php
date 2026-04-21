@@ -19,9 +19,9 @@ class ProjectController extends Controller
 
         if ($projects->isEmpty()) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'No projects found'
-            ], 404);
+                'status' => 'success',
+                'data' => [],
+            ], 200);
         }
 
         return response()->json([
@@ -36,9 +36,9 @@ class ProjectController extends Controller
 
         if ($project->isEmpty()) {
             return response()->json([
-                'status' => 'error',
-                'message' => 'No projects found'
-            ], 404);
+                'status' => 'success',
+                'data' => [],
+            ], 200);
         }
 
         return response()->json([
