@@ -17,23 +17,31 @@ Monorepo untuk aplikasi company profile **Lunar**:
 
 ### Public site
 
+- UI Modern: Antarmuka yang sepenuhnya dirancang ulang menggunakan murni **Tailwind CSS** (meninggalkan PrimeReact) dengan efek *glassmorphism* dan *backdrop-blur*.
 - Halaman company profile: Home, About, Projects, Products, Partners/Clients, Team/Crew, Testimonials
 - Blog/News:
-	- Preview blog terbaru (maks. 6) di Home & About
-	- Halaman list semua post (`/blog`) dengan pagination
-	- Detail post via slug (`/blog/:slug`) + cover image, excerpt, author, tanggal publish
+	- Preview blog terbaru (maks. 6) di Home & About dengan ukuran *card* yang sejajar dan konsisten.
+	- Halaman list semua post (`/blog`) dengan pagination.
+	- Detail post via slug (`/blog/:slug`) + cover image, excerpt, author, tanggal publish, dan fitur *auto-scroll* ke bagian konten.
 - Lead capture: form **Request a Quote** di footer (mengirim inquiry ke API)
 - Multi-language UI (EN/ID) dengan switcher flag kecil di footer (default EN, tersimpan di localStorage)
 
-### Admin
+### Admin & Role-Based Access Control (RBAC)
 
-- Login admin (JWT)
+- Login admin (JWT) dengan dukungan **Multi-Role**:
+	- **Super Admin**: Memiliki akses penuh (mengelola *user*, *approval* blog, notifikasi pesan, dsb).
+	- **Blog Author**: Hanya memiliki akses untuk menulis dan mengedit blog milik mereka sendiri tanpa fitur *auto-logout* yang mengganggu saat menulis panjang.
+- Blog Approval Workflow:
+	- Penulis (Blog Author) mensubmit tulisan, statusnya akan menjadi `pending_approval`.
+	- Super Admin meninjau tulisan tersebut untuk di-`publish`, di-`reject`, atau di-`archive`.
+	- Blog Author dapat memantau status tulisannya (termasuk yang masuk Arsip) dan merevisinya kembali (status akan kembali ke `pending_approval`).
+- Notification System: Notifikasi pesan/inquiry baru yang hanya muncul di layar Super Admin.
 - CRUD data:
 	- Projects, Products, Crew, Partners, Testimonials, Categories
-	- Blog Posts (draft/publish, cover image, slug)
-- Inquiries:
-	- Lihat list inquiry yang masuk
-	- Hapus inquiry
+	- Blog Posts (draft/pending_approval/published/archived, cover image, slug)
+- Inquiries & Messages:
+	- Lihat list inquiry dan pesan yang masuk
+	- Hapus pesan
 - Analytics dashboard:
 	- Dummy data saat local jika Google Analytics belum diset
 	- Bisa pakai GA4 via Spatie Laravel Analytics
