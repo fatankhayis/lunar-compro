@@ -31,6 +31,7 @@ export default function Login() {
     try {
       const { data } = await axios.post(`${BASE_URL}/api/login`, form);
       const token = data?.authorization?.token;
+      const role = data?.user?.role || "super_admin"; // Default fallback if undefined
 
       if (!token) return toast.error("Token not found!");
 
@@ -38,6 +39,7 @@ export default function Login() {
       const expiresAt = Date.now() + 60 * 60 * 1000;
       localStorage.setItem("token", token);
       localStorage.setItem("token_expiry", expiresAt);
+      localStorage.setItem("user_role", role);
 
       toast.success("Login successful");
       setTimeout(() => navigate("/admin"), 600);

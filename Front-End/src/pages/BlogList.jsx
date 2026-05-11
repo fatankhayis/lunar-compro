@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import { BASE_URL } from '../url';
 import { getPublicPostsPage } from './Admin/services/api';
 import { useI18n } from '../i18n/I18nProvider.jsx';
+import lunarlogo from '../assets/Lunar-logo.png';
 
 const BlogList = () => {
   const { t } = useI18n();
@@ -16,36 +17,56 @@ const BlogList = () => {
   const perPage = 9;
   const [meta, setMeta] = useState({ current_page: 1, last_page: 1, per_page: perPage, total: 0 });
 
-  const heroTitleVariants = {
-    hidden: { opacity: 0, y: 60 },
+  const containerVariants = {
+    hidden: {
+      opacity: 0
+    },
     visible: {
       opacity: 1,
-      y: 0,
       transition: {
-        type: 'spring',
-        stiffness: 80,
-        damping: 18,
-        duration: 1,
-        ease: 'easeOut',
-      },
-    },
-  };
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }
+  }
 
-  const heroLineVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: 'spring',
-        stiffness: 90,
-        damping: 20,
-        duration: 0.9,
-        ease: 'easeOut',
-        delay: 0.1,
-      },
+  const logoVariants = {
+    hidden: {
+      y: 100,
+      opacity: 0
     },
-  };
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 70,
+        damping: 20,
+        duration: 1.2,
+        ease: "easeOut"
+      }
+    }
+  }
+
+  const textVariants = {
+    hidden: {
+      y: 60,
+      opacity: 0
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 25,
+        duration: 0.9,
+        ease: "easeOut",
+        delay: 0.4
+      }
+    }
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -125,27 +146,31 @@ const BlogList = () => {
     <div className="min-h-screen">
       <Header />
 
-      {/* Hero (match Home/Project top section) */}
-      <div className="relative h-screen flex justify-center items-center overflow-hidden">
+      {/* Hero - matching Home/Project pattern */}
+      <motion.div 
+        className="relative h-screen w-full overflow-hidden"
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+      >
         <div className="absolute inset-0 bg-gradient-to-t from-bg to-90% to-bgone/80" />
 
-        <div className="relative text-center text-white font-semibold font-heading tracking-wide px-5">
-          <motion.h1
-            className="text-4xl md:text-5xl lg:text-6xl"
-            initial="hidden"
-            animate="visible"
-            variants={heroTitleVariants}
+        <div className="absolute inset-0 flex flex-col justify-center items-center z-30 text-white">
+          <motion.img
+            src={lunarlogo}
+            alt="Lunar Interactive"
+            className="w-72 sm:w-78 md:w-82 lg:w-[360px] xl:w-[460px] mb-5 drop-shadow-2xl"
+            variants={logoVariants}
+          />
+
+          <motion.p 
+            className="text-[18px] sm:text-[19px] md:text-xl lg:text-[23px] xl:text-[28px] font-semibold tracking-wide text-center lg:mt-2"
+            variants={textVariants}
           >
             {t('blog_list_title')}
-          </motion.h1>
-          <motion.div
-            className="mt-5 h-[3px] w-20 bg-white/60 mx-auto"
-            initial="hidden"
-            animate="visible"
-            variants={heroLineVariants}
-          />
+          </motion.p>
         </div>
-      </div>
+      </motion.div>
 
       <motion.div
         className="max-w-6xl mx-auto px-5 py-12 text-white font-heading"
@@ -174,7 +199,7 @@ const BlogList = () => {
                   <motion.div key={post.post_id} variants={itemVariants}>
                     <Link
                       to={`/blog/${post.slug}`}
-                      className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md overflow-hidden block hover:bg-white/10 transition"
+                      className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md overflow-hidden hover:bg-white/10 transition flex flex-col h-full"
                     >
                       {coverUrl ? (
                         <img
@@ -187,10 +212,10 @@ const BlogList = () => {
                         <div className="w-full h-44 bg-white/10" />
                       )}
 
-                      <div className="p-5">
-                        <h3 className="text-lg font-semibold line-clamp-2">{post.title}</h3>
-                        <p className="text-white/70 text-sm mt-2 line-clamp-2">{caption}</p>
-                        <div className="text-[11px] uppercase tracking-wide text-white/60 mt-4">
+                      <div className="p-5 flex flex-col flex-1">
+                        <h3 className="text-lg font-semibold line-clamp-2" title={post.title}>{post.title}</h3>
+                        <p className="text-white/70 text-sm mt-2 line-clamp-3">{caption}</p>
+                        <div className="text-[11px] uppercase tracking-wide text-white/60 mt-auto pt-4">
                           {t('blog_read_more')}
                         </div>
                       </div>

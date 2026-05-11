@@ -21,7 +21,7 @@ const StarBackground = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const img = new Image();
-    img.src = '/image4.png';
+    img.src = import.meta.env.BASE_URL + 'image4.png';
 
     let stars = [];
 

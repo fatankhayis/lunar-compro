@@ -16,24 +16,21 @@ import CrewPage from './pages/Admin/page/CrewPage';
 import ProjectPage from './pages/Admin/page/ProjectPage';
 import PartnershipPage from './pages/Admin/page/PartnershipPage';
 import TestimonialPage from './pages/Admin/page/TestimonialPage';
+import MessagePage from './pages/Admin/page/MessagePage';
 import NotFound from './pages/NotFound';
 import PrivateRoute from './pages/Admin/account/PrivateRoute';
 import ProductPage from './pages/Admin/page/ProductPage';
 import BlogAdminPage from './pages/Admin/page/BlogPage';
+import UserManagementPage from './pages/Admin/page/UserManagementPage';
+import BlogManagementPage from './pages/Admin/page/BlogManagementPage';
+import BlogFormPage from './pages/Admin/page/BlogFormPage';
+import MyBlogsPage from './pages/Admin/page/MyBlogsPage';
+
+import RoleRoute from './pages/Admin/account/RoleRoute';
 
 const AppContent = () => {
   const location = useLocation();
-  const routesWithoutStars = [
-    '/login',
-    '/admin',
-    '/admin/crew',
-    '/admin/product',
-    '/admin/project',
-    '/admin/partnership',
-    '/admin/testimonial',
-    '/admin/blog',
-  ];
-  const hideStars = routesWithoutStars.includes(location.pathname);
+  const hideStars = location.pathname === '/login' || location.pathname.startsWith('/admin');
 
   return (
     <>
@@ -59,12 +56,19 @@ const AppContent = () => {
               }
             >
               <Route index element={<AdminDashboard />} />
-              <Route path="crew" element={<CrewPage />} />
-              <Route path="product" element={<ProductPage />} />
-              <Route path="project" element={<ProjectPage />} />
-              <Route path="partnership" element={<PartnershipPage />} />
-              <Route path="testimonial" element={<TestimonialPage />} />
-              <Route path="blog" element={<BlogAdminPage />} />
+              <Route path="crew" element={<RoleRoute allowedRoles={["super_admin"]}><CrewPage /></RoleRoute>} />
+              <Route path="product" element={<RoleRoute allowedRoles={["super_admin"]}><ProductPage /></RoleRoute>} />
+              <Route path="project" element={<RoleRoute allowedRoles={["super_admin"]}><ProjectPage /></RoleRoute>} />
+              <Route path="partnership" element={<RoleRoute allowedRoles={["super_admin"]}><PartnershipPage /></RoleRoute>} />
+              <Route path="testimonial" element={<RoleRoute allowedRoles={["super_admin"]}><TestimonialPage /></RoleRoute>} />
+              <Route path="blog" element={<RoleRoute allowedRoles={["super_admin"]}><BlogManagementPage /></RoleRoute>} />
+              <Route path="blog-editor" element={<RoleRoute allowedRoles={["super_admin"]}><BlogAdminPage /></RoleRoute>} />
+              <Route path="blogs" element={<RoleRoute allowedRoles={["blog_author"]}><MyBlogsPage /></RoleRoute>} />
+              <Route path="blogs/create" element={<RoleRoute allowedRoles={["blog_author"]}><BlogFormPage /></RoleRoute>} />
+              <Route path="blogs/:postId/edit" element={<RoleRoute allowedRoles={["blog_author"]}><BlogFormPage /></RoleRoute>} />
+              <Route path="blog-management" element={<RoleRoute allowedRoles={["super_admin"]}><BlogManagementPage /></RoleRoute>} />
+              <Route path="inquiries" element={<RoleRoute allowedRoles={["super_admin"]}><MessagePage /></RoleRoute>} />
+              <Route path="users" element={<RoleRoute allowedRoles={["super_admin"]}><UserManagementPage /></RoleRoute>} />
             </Route>
           </Routes>
         </div>

@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "build:spa": "npm --prefix ../Front-End run build"
+        "build:spa": "node -e \"const {spawnSync}=require('child_process');const path=require('path');process.env.BUILD_TO_BACKEND='true';const fe=path.join('..','Front-End');const cmd='npm --prefix \\\"'+fe+'\\\" run build';const r=spawnSync(cmd,{stdio:'inherit',shell:true,env:process.env});process.exit(r.status ?? 1);\""
     },
     "devDependencies": {
         "axios": "^1.6.4",

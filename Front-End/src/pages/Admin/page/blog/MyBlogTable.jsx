@@ -1,15 +1,15 @@
 import React from 'react';
 import { BASE_URL } from '../../../../url';
-import { CheckCircle, Archive, RotateCcw, Trash2, AlertCircle, CheckCheck, Lock } from 'lucide-react';
+import { Eye, Pencil, Trash2, AlertCircle, CheckCheck, Lock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-const BlogManagementTable = ({
+const MyBlogTable = ({
   blogs = [],
-  onApprove,
-  onArchive,
-  onUnarchive,
   onDelete,
   startIndex = 0,
 }) => {
+  const navigate = useNavigate();
+
   const handleImageError = (e) => {
     e.target.onerror = null;
     e.target.src = 'https://via.placeholder.com/80x80?text=No+Img';
@@ -56,7 +56,7 @@ const BlogManagementTable = ({
       <table className="min-w-full table-auto">
         <thead className="bg-gray-50">
           <tr>
-            {['No', 'Image', 'Title', 'Author', 'Status', 'Created', 'Actions'].map((head) => (
+            {['No', 'Image', 'Title', 'Status', 'Created', 'Actions'].map((head) => (
               <th
                 key={head}
                 className="py-3 px-5 text-left text-sm font-semibold text-gray-600 tracking-wide"
@@ -70,8 +70,8 @@ const BlogManagementTable = ({
         <tbody>
           {blogs.length === 0 ? (
             <tr>
-              <td colSpan={7} className="text-center py-10 text-gray-400 text-sm">
-                No blogs available.
+              <td colSpan={6} className="text-center py-10 text-gray-400 text-sm">
+                You haven't created any blogs yet.
               </td>
             </tr>
           ) : (
@@ -101,8 +101,6 @@ const BlogManagementTable = ({
 
                 <td className="py-3 px-5 text-gray-800 text-sm font-medium">{blog.title}</td>
 
-                <td className="py-3 px-5 text-gray-600 text-sm">{blog.author?.name || '-'}</td>
-
                 <td className="py-3 px-5">
                   <span className={`px-3 py-1 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 ${getStatusColor(blog.status)}`}>
                     {getStatusIcon(blog.status)}
@@ -116,65 +114,29 @@ const BlogManagementTable = ({
 
                 <td className="py-3 px-5">
                   <div className="flex flex-wrap gap-2">
-                    {blog.status === 'pending_approval' && (
-                      <button
-                        onClick={() => onApprove(blog.post_id)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition"
-                      >
-                        <CheckCircle size={14} />
-                        Approve
-                      </button>
-                    )}
-                    {(blog.status === 'published' ||
-                      blog.status === 'draft' ||
-                      blog.status === 'pending_approval') && (
-                      <button
-                        onClick={() => onArchive(blog.post_id)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-yellow-100 text-yellow-700 rounded-md hover:bg-yellow-200 transition"
-                      >
-                        <Archive size={14} />
-                        Archive
-                      </button>
-                    )}
-                    {blog.status === 'archived' && (
-                      <button
-                        onClick={() => onUnarchive(blog.post_id)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-blue-100 text-blue-700 rounded-md hover:bg-blue-200 transition"
-                      >
-                        <RotateCcw size={14} />
-                        Restore
-                      </button>
-                    )}
-                    {(blog.status === 'published' ||
-                      blog.status === 'draft' ||
-                      blog.status === 'pending_approval' ||
-                      blog.status === 'archived') && (
-                      <button
-                        onClick={() => handleDelete(blog)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition"
-                      >
-                        <Trash2 size={14} />
-                        Delete
-                      </button>
-                    )}
-                    {!blog.status && (
-                      <>
-                        <button
-                          onClick={() => onArchive(blog.post_id)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-yellow-100 text-yellow-700 rounded-md hover:bg-yellow-200 transition"
-                        >
-                          <Archive size={14} />
-                          Archive
-                        </button>
-                        <button
-                          onClick={() => handleDelete(blog)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition"
-                        >
-                          <Trash2 size={14} />
-                          Delete
-                        </button>
-                      </>
-                    )}
+                    <button
+                      onClick={() => navigate(`/admin/blogs/${blog.post_id}/edit`)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-yellow-100 text-yellow-700 rounded-md hover:bg-yellow-200 transition"
+                    >
+                      <Pencil className="w-3.5 h-3.5" />
+                      Edit
+                    </button>
+                    
+                    <button
+                      onClick={() => navigate(`/blog/${blog.slug}`)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      View
+                    </button>
+
+                    <button
+                      onClick={() => handleDelete(blog)}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      Delete
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -186,4 +148,4 @@ const BlogManagementTable = ({
   );
 };
 
-export default BlogManagementTable;
+export default MyBlogTable;

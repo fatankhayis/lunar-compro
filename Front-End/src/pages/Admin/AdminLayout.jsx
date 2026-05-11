@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
+import NotificationPopup from "./components/NotificationPopup";
 import useAuth from "./page/hooks/useAuth";
+import useMessageNotifications from "./page/hooks/useMessageNotifications";
 
 export default function AdminLayout() {
   useAuth(); // ✅ aktifkan proteksi dan refresh token
@@ -11,6 +13,21 @@ export default function AdminLayout() {
     const saved = localStorage.getItem("sidebarOpen");
     return saved !== null ? JSON.parse(saved) : true;
   });
+
+  const [notification, setNotification] = useState(null);
+  const location = useLocation();
+  
+  // 🔹 Cek role user
+  const userRole = localStorage.getItem("user_role") || "super_admin";
+  
+  // Detect jika user sedang di halaman admin (any admin page)
+  const isAdminPage = location.pathname.startsWith('/admin');
+
+  // 🔔 Polling untuk messages baru HANYA jika super admin
+  const shouldPollMessages = isAdminPage && userRole === 'super_admin';
+  useMessageNotifications((message) => {
+    setNotification(message);
+  }, shouldPollMessages);
 
   // 🔹 Simpan ke localStorage setiap kali sidebarOpen berubah
   useEffect(() => {
@@ -31,6 +48,14 @@ export default function AdminLayout() {
           <Outlet />
         </div>
       </main>
+
+      {/* 🔔 Notification Popup */}
+      {notification && (
+        <NotificationPopup
+          notification={notification}
+          onClose={() => setNotification(null)}
+        />
+      )}
     </div>
   );
 }

@@ -68,7 +68,7 @@ const BlogSection = () => {
       className="w-full pt-6 pb-10 md:pt-10 md:pb-14 lg:pt-12 lg:pb-16 px-5 relative z-10 text-white font-heading"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: true, amount: 0.1 }}
       variants={containerVariants}
     >
       <div className="max-w-6xl mx-auto">
@@ -96,7 +96,7 @@ const BlogSection = () => {
                 <motion.div key={post.post_id} variants={itemVariants}>
                   <Link
                     to={`/blog/${post.slug}`}
-                    className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md overflow-hidden block hover:bg-white/10 transition"
+                    className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur-md overflow-hidden hover:bg-white/10 transition flex flex-col h-full"
                   >
                     {coverUrl ? (
                       <img
@@ -109,8 +109,8 @@ const BlogSection = () => {
                       <div className="w-full h-44 bg-white/10" />
                     )}
 
-                    <div className="p-5">
-                      <h3 className="text-lg font-semibold line-clamp-2">{post.title}</h3>
+                    <div className="p-5 flex flex-col flex-1">
+                      <h3 className="text-lg font-semibold line-clamp-2" title={post.title}>{post.title}</h3>
                       <p className="text-white/70 text-sm mt-2 line-clamp-3">{caption}</p>
                     </div>
                   </Link>

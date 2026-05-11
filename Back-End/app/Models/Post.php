@@ -19,11 +19,13 @@ class Post extends Model
         'author_id',
         'is_published',
         'published_at',
+        'status',
     ];
 
     protected $casts = [
         'is_published' => 'boolean',
         'published_at' => 'datetime',
+        'status' => 'string',
     ];
 
     public function author(): BelongsTo

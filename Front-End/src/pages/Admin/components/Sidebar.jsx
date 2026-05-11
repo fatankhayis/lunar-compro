@@ -11,7 +11,8 @@ import {
   Clock,
   Package,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Mail
 } from "lucide-react";
 import axios from "axios";
 import { BASE_URL } from "../../../url";
@@ -20,35 +21,64 @@ import toast from "react-hot-toast";
 export default function Sidebar({ isOpen, toggleSidebar }) {
   const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState("");
+  const userRole = localStorage.getItem("user_role") || "super_admin";
 
-  const menuItems = [
-    { path: "/admin", label: "Dashboard", icon: <Home className="w-5 h-5" /> },
-    { path: "/admin/crew", label: "Crew", icon: <Users className="w-5 h-5" /> },
-    { path: "/admin/product", label: "Product", icon: <Package className="w-5 h-5" /> },
+  const allMenuItems = [
+    { path: "/admin", label: "Dashboard", icon: <Home className="w-5 h-5" />, roles: ["super_admin", "blog_author"] },
+    { path: "/admin/crew", label: "Crew", icon: <Users className="w-5 h-5" />, roles: ["super_admin"] },
+    { path: "/admin/product", label: "Product", icon: <Package className="w-5 h-5" />, roles: ["super_admin"] },
     {
       path: "/admin/project",
       label: "Project",
       icon: <FolderKanban className="w-5 h-5" />,
+      roles: ["super_admin"]
     },
     {
       path: "/admin/partnership",
       label: "Partnership",
       icon: <Handshake className="w-5 h-5" />,
+      roles: ["super_admin"]
     },
     {
       path: "/admin/testimonial",
       label: "Testimonial",
       icon: <UserStar className="w-5 h-5" />,
+      roles: ["super_admin"]
+    },
+    {
+      path: "/admin/blogs",
+      label: "My Blogs",
+      icon: <FileText className="w-5 h-5" />,
+      roles: ["blog_author"]
     },
     {
       path: "/admin/blog",
-      label: "Blog",
+      label: "Blog Management",
       icon: <FileText className="w-5 h-5" />,
+      roles: ["super_admin"]
+    },
+    {
+      path: "/admin/inquiries",
+      label: "Messages",
+      icon: <Mail className="w-5 h-5" />,
+      roles: ["super_admin"]
+    },
+    {
+      path: "/admin/users",
+      label: "Users",
+      icon: <Users className="w-5 h-5" />,
+      roles: ["super_admin"]
     },
   ];
 
+  const menuItems = allMenuItems.filter(item => item.roles.includes(userRole));
+
   // 🕒 Hitung waktu tersisa token
   useEffect(() => {
+    if (userRole === "blog_author") {
+      return;
+    }
+
     const updateTimer = () => {
       const expiry = localStorage.getItem("token_expiry");
       if (!expiry) {
@@ -65,6 +95,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
         // 🧹 Auto logout
         localStorage.removeItem("token");
         localStorage.removeItem("token_expiry");
+        localStorage.removeItem("user_role");
         navigate("/login");
         return;
       }
@@ -78,7 +109,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
     updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
-  }, [navigate]);
+  }, [navigate, userRole]);
 
   const handleLogout = async () => {
     try {
@@ -98,6 +129,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
       localStorage.removeItem("token");
       localStorage.removeItem("token_expiry");
       localStorage.removeItem("refresh_token");
+      localStorage.removeItem("user_role");
       // 🔹 Hapus juga sidebar state saat logout
       localStorage.removeItem("sidebarOpen");
 
@@ -179,21 +211,23 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
         {/* 🔹 FOOTER - TIMER & LOGOUT */}
         <div className={`border-t border-gray-200 ${isOpen ? 'p-4' : 'p-2'}`}>
           {/* Timer */}
-          <div className={`flex items-center ${isOpen ? 'gap-2 mb-3' : 'justify-center mb-2'}`}>
-            <Clock className="w-4 h-4 text-gray-500" />
-            {isOpen && (
-              <div className="text-gray-500 text-sm">
-                <span>Expires: </span>
-                <span
-                  className={`font-medium ${
-                    timeLeft === "Expired" ? "text-red-500" : "text-gray-700"
-                  }`}
-                >
-                  {timeLeft}
-                </span>
-              </div>
-            )}
-          </div>
+          {userRole !== "blog_author" && (
+            <div className={`flex items-center ${isOpen ? 'gap-2 mb-3' : 'justify-center mb-2'}`}>
+              <Clock className="w-4 h-4 text-gray-500" />
+              {isOpen && (
+                <div className="text-gray-500 text-sm">
+                  <span>Expires: </span>
+                  <span
+                    className={`font-medium ${
+                      timeLeft === "Expired" ? "text-red-500" : "text-gray-700"
+                    }`}
+                  >
+                    {timeLeft}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Logout Button */}
           <button

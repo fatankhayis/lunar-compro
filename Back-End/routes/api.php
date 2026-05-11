@@ -12,6 +12,7 @@ use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\InquiryController;
 use App\Http\Controllers\api\PostController;
 use App\Http\Controllers\api\TestimonialController;
+use App\Http\Controllers\api\UserController;
 use App\Http\Controllers\DashboardController;
 // auth
 Route::post('login', [AuthController::class, 'login']);
@@ -21,6 +22,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::get('remaining', [AuthController::class, 'remaining']);
+    Route::get('me', [AuthController::class, 'me']);
 
     // projects
     Route::post('projects', [ProjectController::class, 'store']);
@@ -54,10 +56,14 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('posts', [PostController::class, 'store']);
     Route::post('posts/{post_id}', [PostController::class, 'update'])->whereNumber('post_id');
     Route::delete('posts/{post_id}', [PostController::class, 'destroy'])->whereNumber('post_id');
+    Route::patch('posts/{post_id}/approve', [PostController::class, 'approve'])->whereNumber('post_id');
+    Route::patch('posts/{post_id}/archive', [PostController::class, 'archive'])->whereNumber('post_id');
+    Route::patch('posts/{post_id}/unarchive', [PostController::class, 'unarchive'])->whereNumber('post_id');
 
     // inquiries (admin)
     Route::get('inquiries', [InquiryController::class, 'index']);
     Route::get('inquiries/{inquiry_id}', [InquiryController::class, 'show']);
+    Route::patch('inquiries/{inquiry_id}', [InquiryController::class, 'update']);
     Route::delete('inquiries/{inquiry_id}', [InquiryController::class, 'destroy']);
 
     // categories
@@ -66,6 +72,12 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('categories/{category_id}', [CategoryController::class, 'update']);
     Route::delete('categories/{category_id}', [CategoryController::class, 'destroy']);
     Route::get('categories/{category_id}', [CategoryController::class, 'show']);
+
+    // users (admin only)
+    Route::get('users', [UserController::class, 'index']);
+    Route::post('users', [UserController::class, 'store']);
+    Route::patch('users/{id}', [UserController::class, 'update']);
+    Route::delete('users/{id}', [UserController::class, 'destroy']);
 });
 
 

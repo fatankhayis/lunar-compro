@@ -196,7 +196,7 @@ npm run dev
 
 ## Mode Production-like (React dibuild ke Laravel)
 
-Mode ini cocok kalau mau simulasi deploy “satu server”: React dibuild ke `Back-End/public/app` dan Laravel serve SPA untuk non-`/api` routes.
+Mode ini cocok kalau mau simulasi deploy “satu server”: React dibuild ke `Back-End/public/build` dan Laravel serve SPA untuk non-`/api` routes.
 
 1) Install dependency FE
 

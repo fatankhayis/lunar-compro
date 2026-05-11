@@ -60,4 +60,5 @@ npm run build
 ```
 
 Catatan:
-- Untuk mode single-server, build React diarahkan ke `Back-End/public/app` via script di Back-End (`npm run build:spa`).
+- Default output build ada di `Front-End/dist` (cocok untuk upload ke cPanel/static hosting).
+- Untuk mode single-server (Laravel serve SPA), jalankan dari `Back-End/`: `npm run build:spa` (output ke `Back-End/public/build`).

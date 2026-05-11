@@ -21,6 +21,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -43,7 +44,26 @@ class User extends Authenticatable implements JWTSubject
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => 'string',
         ];
+    }
+
+    // Check if user is super admin
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === 'super_admin';
+    }
+
+    // Check if user is blog author
+    public function isBlogAuthor(): bool
+    {
+        return $this->role === 'blog_author';
+    }
+
+    // Relationship dengan posts (for blog authors)
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'author_id');
     }
 
     // ... (existing properties like $fillable, $hidden, $casts) ...

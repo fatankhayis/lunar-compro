@@ -67,6 +67,22 @@ class AuthController extends Controller
     }
 
 
+    public function me()
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $user->only(['id', 'name', 'email', 'role', 'created_at']),
+        ], 200);
+    }
+
     public function remaining()
     {
         try {

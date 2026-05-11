@@ -17,6 +17,20 @@ export default function useAuth() {
         return;
       }
 
+      // ✅ Ensure user_role exists (for role-based routes/sidebar)
+      if (!localStorage.getItem("user_role")) {
+        try {
+          const me = await axios.get(`${BASE_URL}/api/me`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const role = me.data?.data?.role;
+          if (role) localStorage.setItem("user_role", role);
+        } catch (e) {
+          logout();
+          return;
+        }
+      }
+
       const now = Date.now();
       const remaining = expiry - now;
 
@@ -56,6 +70,7 @@ export default function useAuth() {
     const logout = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("token_expiry");
+      localStorage.removeItem("user_role");
       navigate("/login");
     };
 

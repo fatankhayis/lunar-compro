@@ -97,4 +97,29 @@ class InquiryController extends Controller
             'message' => 'Inquiry deleted successfully',
         ], 200);
     }
+
+    public function update(Request $request, string $id)
+    {
+        $item = Inquiry::find($id);
+        if (!$item) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Inquiry not found',
+            ], 404);
+        }
+
+        $request->validate([
+            'status' => 'required|in:new,read,archived',
+        ]);
+
+        $item->update([
+            'status' => $request->status,
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Inquiry updated successfully',
+            'data' => $item,
+        ], 200);
+    }
 }

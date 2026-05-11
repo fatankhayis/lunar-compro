@@ -69,13 +69,13 @@ Notes:
 
 ## Serving the React Front-End (Production)
 
-This repo also contains a separate React app in `Front-End/`. For a single deployment, the React build is configured to output into `Back-End/public/app` and Laravel serves `public/app/index.html` for all non-`/api` routes.
+This repo also contains a separate React app in `Front-End/`. For a single deployment, the React build is configured to output into `Back-End/public/build` and Laravel serves `public/build/index.html` for all non-`/api` routes.
 
 1. Build the React app into Laravel public folder
    - From `Back-End/`:
      - `npm run build:spa`
-   - Or from `Front-End/`:
-     - `npm run build`
+    - From `Front-End/` (default):
+       - `npm run build` (outputs to `Front-End/dist`)
 
 2. Run Laravel normally
    - `php artisan serve`
