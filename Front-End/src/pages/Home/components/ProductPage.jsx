@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import CardProduct from "./CardProduct";
 import { getProducts } from "../../Admin/services/api";
+import { useI18n } from '../../../i18n/I18nProvider.jsx';
 
 const ProductPage = () => {
+  const { t } = useI18n();
   const cardRef = useRef(null);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,7 +30,7 @@ const ProductPage = () => {
 
       <div className="relative max-w-[1320px] px-5 mx-auto flex flex-col gap-10">
         <h1 className="font-semibold font-heading text-[24px] md:text-[28px] lg:text-[31px] xl:text-[33px] text-white text-center">
-          Our Product
+          {t('home_product')}
         </h1>
 
         {/* Card dengan CSS transition */}

@@ -1,7 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useI18n } from "../../../i18n/I18nProvider.jsx";
 
 const HomePage = () => {
+  const { t } = useI18n();
   // Variants untuk animasi
   const containerVariants = {
     hidden: {
@@ -68,12 +70,12 @@ const HomePage = () => {
         <motion.h1 
           variants={textVariants}
         >
-          Get to know
+          {t('about_get_to_know')}
         </motion.h1>
         <motion.p 
           variants={secondLineVariants}
         >
-          us more
+          {t('about_us_more')}
         </motion.p>
       </div>
     </motion.div>

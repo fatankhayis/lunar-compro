@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LuCircleChevronLeft, LuCircleChevronRight } from 'react-icons/lu';
 import { getTestimonials } from '../../Admin/services/api';
 import CardClient from './CardClient';
+import { useI18n } from '../../../i18n/I18nProvider.jsx';
 
 const ClientPage = () => {
+  const { t } = useI18n();
   const [testimonials, setTestimonials] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -128,7 +130,7 @@ const ClientPage = () => {
     <section className="py-12 md:py-20 px-4 sm:px-6 flex flex-col items-center text-white font-heading overflow-hidden">
       {/* Header - TANPA ANIMASI & TAMPIL SELALU */}
       <h2 className="text-2xl md:text-3xl font-semibold text-center mb-0 md:mb-14 lg:mb-0">
-        What Our Clients Say
+        {t('home_clients')}
       </h2>
 
       {/* Wrapper */}

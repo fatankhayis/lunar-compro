@@ -3,10 +3,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CardProject from "./CardProject";
 import { getProjects } from "../../Admin/services/api";
+import { useI18n } from '../../../i18n/I18nProvider.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ProjectPage = () => {
+  const { t } = useI18n();
   const cardsRef = useRef([]);
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -88,7 +90,7 @@ const ProjectPage = () => {
     <div className="relative py-28 w-full overflow-hidden">
       <div className="relative max-w-[2000px] px-10 mx-auto flex flex-col gap-10">
         <h1 className="font-semibold font-heading text-[24px] md:text-[28px] lg:text-[32px] text-white text-center">
-          Our Project
+          {t('home_project')}
         </h1>
 
         <div className="grid grid-cols-1 gap-16">
@@ -106,7 +108,7 @@ const ProjectPage = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-300">No projects available.</p>
+            <p className="text-center text-gray-300">{t('home_no_projects') || 'No projects available.'}</p>
           )}
         </div>
       </div>

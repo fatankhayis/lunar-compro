@@ -5,8 +5,10 @@ import { getPartnerships } from '../../Admin/services/api';
 import { BASE_URL } from '../../../url';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useI18n } from '../../../i18n/I18nProvider.jsx';
 
 const PartnershipPage = () => {
+  const { t } = useI18n();
   const [groupedPartners, setGroupedPartners] = useState({});
   const [loading, setLoading] = useState(true);
   const [hoveredPartner, setHoveredPartner] = useState(null);
@@ -62,7 +64,7 @@ const PartnershipPage = () => {
   if (loading) {
     return (
       <div className="w-full py-16 flex flex-col gap-5">
-        <h1 className="text-white text-center text-[28px] font-semibold">Our Partnership</h1>
+        <h1 className="text-white text-center text-[28px] font-semibold">{t('home_partnership')}</h1>
         <div className="flex gap-6 justify-center py-4">
           {[1, 2, 3].map((x) => (
             <div key={x} className="flex flex-col items-center gap-3">
@@ -77,7 +79,7 @@ const PartnershipPage = () => {
 
   // JIKA TIDAK ADA DATA
   if (Object.keys(groupedPartners).length === 0) {
-    return <p className="text-center text-white py-20">No partnerships yet.</p>;
+    return <p className="text-center text-white py-20">{t('home_no_partnerships') || 'No partnerships yet.'}</p>;
   }
 
   // Pisahkan "Schools" dan yang lain
@@ -98,7 +100,7 @@ const PartnershipPage = () => {
   return (
     <div className="w-full py-16 lg:py-20 font-heading relative overflow-hidden">
       <h1 className="text-white text-center text-[28px] lg:text-[32px] font-semibold">
-        Our Partnership
+        {t('home_partnership')}
       </h1>
 
       {/* GRADIENT LEFT/RIGHT */}
@@ -157,7 +159,7 @@ const PartnershipPage = () => {
       {loopSchools.length > 0 && (
         <>
           <h1 className="text-white text-center text-[26px] lg:text-[30px] font-semibold py-4">
-            Schools Partnership
+            {t('home_schools_partnership') || 'Schools Partnership'}
           </h1>
 
           <Marquee gradient={false} speed={45} pauseOnHover={true} direction="right">

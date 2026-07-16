@@ -11,6 +11,28 @@ const DICT = {
     nav_project: 'Project',
     nav_blog: 'Blog',
 
+    home_interactive: 'Interactive',
+    home_innovative: 'Innovative',
+    home_intuitive: 'Intuitive',
+    home_scroll: 'Scroll To Explore',
+    home_partnership: 'Our Partnership',
+    home_clients: 'What Our Clients Say',
+    home_product: 'Our Product',
+    home_project: 'Our Project',
+
+    about_get_to_know: 'Get to know',
+    about_us_more: 'us more',
+    about_title: 'Interactive Learning through Technology',
+    about_desc1: 'Lunar Interactive is transforming education with innovative technology. We focus on Digital Game-Based Learning (DGBL) to make learning engaging through game mechanics, and Computer-Assisted Language Learning (CALL) to enhance language acquisition. Our mission is to create intuitive, interactive platforms',
+    about_desc2: 'that make learning both effective and enjoyable.',
+    about_crew: 'Our Crew',
+    about_news: 'News & Articles',
+    about_insights: 'Insights & updates from Lunar.',
+    about_view_all: 'View all post',
+
+    project_journey: 'Our Journey',
+    project_in_projects: 'in projects',
+
     header_collaborate: 'Collaborate with us',
 
     footer_company: 'Company',
@@ -43,6 +65,28 @@ const DICT = {
     nav_projects: 'Proyek',
     nav_project: 'Proyek',
     nav_blog: 'Blog',
+
+    home_interactive: 'Interaktif',
+    home_innovative: 'Inovatif',
+    home_intuitive: 'Intuitif',
+    home_scroll: 'Scroll Untuk Menjelajah',
+    home_partnership: 'Kemitraan Kami',
+    home_clients: 'Apa Kata Klien Kami',
+    home_product: 'Produk Kami',
+    home_project: 'Proyek Kami',
+
+    about_get_to_know: 'Mengenal',
+    about_us_more: 'kami lebih jauh',
+    about_title: 'Pembelajaran Interaktif melalui Teknologi',
+    about_desc1: 'Lunar Interactive mengubah pendidikan dengan teknologi inovatif. Kami berfokus pada Digital Game-Based Learning (DGBL) untuk membuat pembelajaran menarik melalui mekanika game, dan Computer-Assisted Language Learning (CALL) untuk meningkatkan penguasaan bahasa. Misi kami adalah menciptakan platform interaktif yang intuitif',
+    about_desc2: 'yang membuat pembelajaran efektif dan menyenangkan.',
+    about_crew: 'Kru Kami',
+    about_news: 'Berita & Artikel',
+    about_insights: 'Wawasan & pembaruan dari Lunar.',
+    about_view_all: 'Lihat semua postingan',
+
+    project_journey: 'Perjalanan Kami',
+    project_in_projects: 'dalam proyek',
 
     header_collaborate: 'Kolaborasi bersama kami',
 

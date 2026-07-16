@@ -4,9 +4,10 @@ import { getProjects } from "../../Admin/services/api";
 import { BASE_URL } from "../../../url";
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-
+import { useI18n } from '../../../i18n/I18nProvider.jsx';
 
 const ProjectPage = () => {
+  const { t } = useI18n();
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -39,7 +40,7 @@ const ProjectPage = () => {
 
       <div className="relative max-w-full px-5 mx-auto flex flex-col gap-10">
         <h1 className="font-semibold font-heading text-[24px] md:text-[28px] lg:text-[31px] xl:text-[33px] text-white text-center">
-          Our Project
+          {t('home_project')}
         </h1>
 
         {/* 🔸 Error message */}
@@ -83,7 +84,7 @@ const ProjectPage = () => {
               hover:bg-white/25 hover:shadow-lg active:bg-white/30
               transition-all duration-300 group"
             >
-              More Project
+              {t('home_more_project') || 'More Project'}
             </a>
           </div>
         )}

@@ -6,9 +6,8 @@ import useAuth from "./page/hooks/useAuth";
 import useMessageNotifications from "./page/hooks/useMessageNotifications";
 
 export default function AdminLayout() {
-  useAuth(); // ✅ aktifkan proteksi dan refresh token
-  
-  // 🔹 Ambil state dari localStorage, default true (terbuka)
+  useAuth(); // aktifkan proteksi dan refresh token
+
   const [sidebarOpen, setSidebarOpen] = useState(() => {
     const saved = localStorage.getItem("sidebarOpen");
     return saved !== null ? JSON.parse(saved) : true;
@@ -16,20 +15,16 @@ export default function AdminLayout() {
 
   const [notification, setNotification] = useState(null);
   const location = useLocation();
-  
-  // 🔹 Cek role user
-  const userRole = localStorage.getItem("user_role") || "super_admin";
-  
-  // Detect jika user sedang di halaman admin (any admin page)
-  const isAdminPage = location.pathname.startsWith('/admin');
+  const userRole = localStorage.getItem("user_role");
 
-  // 🔔 Polling untuk messages baru HANYA jika super admin
-  const shouldPollMessages = isAdminPage && userRole === 'super_admin';
+  const isAdminPage = location.pathname.startsWith("/admin");
+  // Only show notifications to super_admin
+  const isSuperAdmin = userRole === "super_admin";
+
   useMessageNotifications((message) => {
     setNotification(message);
-  }, shouldPollMessages);
+  }, isSuperAdmin && isAdminPage);
 
-  // 🔹 Simpan ke localStorage setiap kali sidebarOpen berubah
   useEffect(() => {
     localStorage.setItem("sidebarOpen", JSON.stringify(sidebarOpen));
   }, [sidebarOpen]);
@@ -41,16 +36,14 @@ export default function AdminLayout() {
   return (
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-      
-      {/* Main Content */}
+
       <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'lg:ml-64' : 'lg:ml-16'}`}>
         <div className="p-4">
           <Outlet />
         </div>
       </main>
 
-      {/* 🔔 Notification Popup */}
-      {notification && (
+      {notification && isSuperAdmin && (
         <NotificationPopup
           notification={notification}
           onClose={() => setNotification(null)}

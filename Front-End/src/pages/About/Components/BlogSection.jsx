@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BASE_URL } from '../../../url';
 import { getPublicPostsPage } from '../../Admin/services/api';
+import { useI18n } from '../../../i18n/I18nProvider.jsx';
 
 const BlogSection = () => {
+  const { t } = useI18n();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -74,15 +76,15 @@ const BlogSection = () => {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="font-semibold text-[24px] md:text-[28px] lg:text-[31px] xl:text-[33px]">
-            Blog / News
+            {t('about_news')}
           </h2>
-          <p className="text-white/70 mt-2">Insights & updates from Lunar.</p>
+          <p className="text-white/70 mt-2">{t('about_insights')}</p>
         </div>
 
         {loading ? (
-          <p className="text-center text-white/60">Loading…</p>
+          <p className="text-center text-white/60">{t('loading')}</p>
         ) : posts.length === 0 ? (
-          <p className="text-center text-white/60">No posts yet.</p>
+          <p className="text-center text-white/60">{t('blog_empty')}</p>
         ) : (
           <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6" variants={gridVariants}>
             {posts.map((post) => {
@@ -125,7 +127,7 @@ const BlogSection = () => {
             to="/blog"
             className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-6 py-2 text-sm text-white/90 hover:bg-white/10 transition"
           >
-            View all posts
+            {t('about_view_all')}
           </Link>
         </div>
       </div>

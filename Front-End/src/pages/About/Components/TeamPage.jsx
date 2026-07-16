@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CardTeam from "./CardTeam";
 import { getCrew } from "../../Admin/services/api";
 import { BASE_URL } from "../../../url";
+import { useI18n } from "../../../i18n/I18nProvider.jsx";
 
 const SkeletonCard = () => {
   return (
@@ -14,6 +15,7 @@ const SkeletonCard = () => {
 };
 
 const TeamPage = () => {
+  const { t } = useI18n();
   const [crewList, setCrewList] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -58,7 +60,7 @@ const TeamPage = () => {
     <div className="py-20 px-4 sm:px-6 md:px-12 lg:px-18 xl-px-20">
       {/* Judul statis */}
       <h2 className="font-semibold font-heading text-[24px] md:text-[28px] lg:text-[32px] text-white text-center mb-10">
-        Let’s meet our crew!
+        {t('about_crew')}
       </h2>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-4 md:gap-y-6 gap-x-8">

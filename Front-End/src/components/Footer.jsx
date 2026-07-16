@@ -7,12 +7,9 @@ import yt from '../assets/Youtube.png';
 import link from '../assets/Linkedin.png';
 import { createInquiry } from '../pages/Admin/services/api';
 import { useI18n } from '../i18n/I18nProvider.jsx';
-import { ChevronDown } from 'lucide-react';
-import flagEN from '../assets/flags/en.svg';
-import flagID from '../assets/flags/id.svg';
 
 const Footer = () => {
-  const { lang, setLang, t } = useI18n();
+  const { t } = useI18n();
   const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || 'dev.lunarinteractive@gmail.com';
   const scrollToTop = () => {
     window.scrollTo({
@@ -27,22 +24,6 @@ const Footer = () => {
     message: '',
   });
   const [submitting, setSubmitting] = React.useState(false);
-
-  const langDropdownRef = React.useRef(null);
-  const [isLangOpen, setIsLangOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    const onDocClick = (e) => {
-      if (!langDropdownRef.current) return;
-      if (langDropdownRef.current.contains(e.target)) return;
-      setIsLangOpen(false);
-    };
-
-    document.addEventListener('mousedown', onDocClick);
-    return () => document.removeEventListener('mousedown', onDocClick);
-  }, []);
-
-  const currentFlag = lang === 'id' ? flagID : flagEN;
 
   const onChange = (key) => (e) => {
     setQuoteForm((prev) => ({ ...prev, [key]: e.target.value }));
@@ -118,58 +99,7 @@ const Footer = () => {
               </li>
             </ul>
 
-            {/* Language dropdown (flag only) */}
-            <div className="mt-4" ref={langDropdownRef}>
-              <button
-                type="button"
-                aria-label="Language"
-                title="Language"
-                aria-expanded={isLangOpen}
-                onClick={() => setIsLangOpen((v) => !v)}
-                className="h-6 w-[52px] rounded-md border border-white/30 bg-white/10 backdrop-blur-md hover:bg-white/15 transition flex items-center justify-between pl-1 pr-1"
-              >
-                <span className="h-4 w-7 rounded-sm overflow-hidden block">
-                  <img src={currentFlag} alt="Current language" className="h-full w-full object-cover" />
-                </span>
-                <ChevronDown
-                  size={12}
-                  className={`text-white/80 transition-transform ${isLangOpen ? 'rotate-180' : ''}`}
-                />
-              </button>
 
-              {isLangOpen && (
-                <div className="relative">
-                  <div className="absolute left-0 mt-1 w-[52px] rounded-md border border-white/20 bg-white/10 backdrop-blur-md overflow-hidden shadow-lg z-50">
-                    <button
-                      type="button"
-                      onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => {
-                        setLang('en');
-                        setIsLangOpen(false);
-                      }}
-                      className="block w-full hover:bg-white/10 transition"
-                      aria-label="English"
-                      title="English"
-                    >
-                      <img src={flagEN} alt="English" className="h-6 w-full object-cover" />
-                    </button>
-                    <button
-                      type="button"
-                      onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => {
-                        setLang('id');
-                        setIsLangOpen(false);
-                      }}
-                      className="block w-full hover:bg-white/10 transition"
-                      aria-label="Indonesia"
-                      title="Indonesia"
-                    >
-                      <img src={flagID} alt="Indonesia" className="h-6 w-full object-cover" />
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
 
           {/* Quote form */}

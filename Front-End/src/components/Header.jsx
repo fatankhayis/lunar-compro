@@ -1,15 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Lunar from '../assets/Lunar-logo.png';
 import { Link, useLocation } from 'react-router-dom';
-import { Mail, Menu, X } from 'lucide-react';
+import { Mail, Menu, X, ChevronDown } from 'lucide-react';
 import { useI18n } from '../i18n/I18nProvider.jsx';
+import flagEN from '../assets/flags/en.svg';
+import flagID from '../assets/flags/id.svg';
 
 const Header = () => {
   const [isScroll, setIsScroll] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  const { t } = useI18n();
+  const { lang, setLang, t } = useI18n();
+
+  const langDropdownRef = useRef(null);
+  const [isLangOpen, setIsLangOpen] = useState(false);
+
+  useEffect(() => {
+    const onDocClick = (e) => {
+      if (!langDropdownRef.current) return;
+      if (langDropdownRef.current.contains(e.target)) return;
+      setIsLangOpen(false);
+    };
+
+    document.addEventListener('mousedown', onDocClick);
+    return () => document.removeEventListener('mousedown', onDocClick);
+  }, []);
+
+  const currentFlag = lang === 'id' ? flagID : flagEN;
 
   const location = useLocation();
   const path = location.pathname;
@@ -111,8 +129,63 @@ const Header = () => {
           </ul>
         </nav>
 
-        {/* Desktop Contact - DI SEBELAH KANAN */}
-        <div className="hidden lg:flex items-start gap-3">
+        {/* Desktop Contact & Lang - DI SEBELAH KANAN */}
+        <div className="hidden lg:flex items-center gap-4">
+          <div className="relative" ref={langDropdownRef}>
+            <button
+              type="button"
+              aria-label="Language"
+              title="Language"
+              aria-expanded={isLangOpen}
+              onClick={() => setIsLangOpen((v) => !v)}
+              className="h-9 w-[64px] rounded-full border border-white/30 bg-white/10 backdrop-blur-md hover:bg-white/15 transition flex items-center justify-between px-2"
+            >
+              <span className="h-5 w-7 rounded-sm overflow-hidden block">
+                <img src={currentFlag} alt="Current language" className="h-full w-full object-cover" />
+              </span>
+              <ChevronDown
+                size={14}
+                className={`text-white/80 transition-transform ${isLangOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+
+            <AnimatePresence>
+              {isLangOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  className="absolute left-0 mt-2 w-[64px] rounded-md border border-white/20 bg-white/10 backdrop-blur-md overflow-hidden shadow-lg z-50"
+                >
+                  <button
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => {
+                      setLang('en');
+                      setIsLangOpen(false);
+                    }}
+                    className="block w-full hover:bg-white/20 transition p-1.5"
+                    title="English"
+                  >
+                    <img src={flagEN} alt="English" className="h-5 w-full object-cover rounded-sm" />
+                  </button>
+                  <button
+                    type="button"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => {
+                      setLang('id');
+                      setIsLangOpen(false);
+                    }}
+                    className="block w-full hover:bg-white/20 transition p-1.5"
+                    title="Indonesia"
+                  >
+                    <img src={flagID} alt="Indonesia" className="h-5 w-full object-cover rounded-sm" />
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           <a
             href="https://mail.google.com/mail/?view=cm&fs=1&to=dev.lunarinteractive@gmail.com"
             target="_blank"
@@ -193,7 +266,30 @@ const Header = () => {
               animate="open"
               exit="closed"
               transition={{ delay: 0.3, duration: 0.3 }}
+              className="flex flex-col items-center gap-4"
             >
+              {/* Language Toggle Mobile */}
+              <div className="flex gap-4 mb-2">
+                <button
+                  onClick={() => {
+                    setLang('en');
+                    setIsOpen(false);
+                  }}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition ${lang === 'en' ? 'border-white bg-white/20' : 'border-white/30 bg-white/5'}`}
+                >
+                  <img src={flagEN} alt="English" className="w-5 rounded-sm" /> EN
+                </button>
+                <button
+                  onClick={() => {
+                    setLang('id');
+                    setIsOpen(false);
+                  }}
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-full border transition ${lang === 'id' ? 'border-white bg-white/20' : 'border-white/30 bg-white/5'}`}
+                >
+                  <img src={flagID} alt="Indonesia" className="w-5 rounded-sm" /> ID
+                </button>
+              </div>
+
               <a
                 href="https://mail.google.com/mail/?view=cm&fs=1&to=dev.lunarinteractive@gmail.com"
                 target="_blank"

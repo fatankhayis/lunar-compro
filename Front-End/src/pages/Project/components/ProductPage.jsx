@@ -3,10 +3,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CardProduct from "./CardProduct";
 import { getProducts } from "../../Admin/services/api";
+import { useI18n } from '../../../i18n/I18nProvider.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ProductPage = () => {
+  const { t } = useI18n();
   const cardsRef = useRef([]);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -80,7 +82,7 @@ const ProductPage = () => {
       <div className="relative max-w-[2000px] px-10 mx-auto flex flex-col gap-10">
         {/* Header - Static */}
         <h1 className="font-semibold font-heading text-[24px] md:text-[28px] lg:text-[32px] text-white text-center">
-          Our Product
+          {t('home_product')}
         </h1>
 
         {/* Products Grid */}
@@ -100,7 +102,7 @@ const ProductPage = () => {
               </div>
             ))
           ) : (
-            <p className="text-center text-gray-300">No products available.</p>
+            <p className="text-center text-gray-300">{t('home_no_products') || 'No products available.'}</p>
           )}
         </div>
       </div>
