@@ -24,7 +24,7 @@ Monorepo untuk aplikasi company profile **Lunar**:
 	- Halaman list semua post (`/blog`) dengan pagination.
 	- Detail post via slug (`/blog/:slug`) + cover image, excerpt, author, tanggal publish, dan fitur *auto-scroll* ke bagian konten.
 - Lead capture: form **Request a Quote** di footer (mengirim inquiry ke API)
-- Multi-language UI (EN/ID) dengan switcher flag kecil di footer (default EN, tersimpan di localStorage)
+- Multi-language UI (EN/ID) dengan switcher bahasa di Navbar/Header agar lebih menonjol (default EN, tersimpan di localStorage)
 
 ### Admin & Role-Based Access Control (RBAC)
 
@@ -37,7 +37,7 @@ Monorepo untuk aplikasi company profile **Lunar**:
 	- Blog Author dapat memantau status tulisannya (termasuk yang masuk Arsip) dan merevisinya kembali (status akan kembali ke `pending_approval`).
 - Notification System: Notifikasi pesan/inquiry baru yang hanya muncul di layar Super Admin.
 - CRUD data:
-	- Projects, Products, Crew, Partners, Testimonials, Categories
+	- Projects, Products, Crew (Dilengkapi fitur **AI Background Removal** otomatis saat preview foto menggunakan `@imgly/background-removal`), Partners, Testimonials, Categories
 	- Blog Posts (draft/pending_approval/published/archived, cover image, slug)
 - Inquiries & Messages:
 	- Lihat list inquiry dan pesan yang masuk
