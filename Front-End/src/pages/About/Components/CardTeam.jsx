@@ -87,10 +87,10 @@ const CardTeam = ({ name, role, title, image }) => {
         <motion.img
           src={image}
           alt={name}
-          className="absolute top-5 lg:top-3 xl:-top-1 left-1/2 -translate-x-1/2 w-64 md:w-66 lg:w-60 xl:w-74 h-auto object-contain pointer-events-auto"
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 w-64 md:w-66 lg:w-60 xl:w-74 h-[260px] md:h-[260px] lg:h-[250px] xl:h-[300px] object-contain object-bottom pointer-events-auto"
           variants={imageVariants}
           whileHover={{
-            scale: 1.0,
+            scale: 1.05,
             y: -5,
             transition: { type: "spring", stiffness: 400, damping: 10 }
           }}
